@@ -63,7 +63,8 @@ class Redis
       end
 
       def timeout=(timeout)
-        # tbd
+        usecs = Integer(timeout * 1_000_000)
+        connection.timeout = usecs
       end
 
     end
