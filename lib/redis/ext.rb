@@ -26,7 +26,9 @@ class Redis
 
       def read
         begin
-          connection.read
+          reply = connection.read
+          raise reply if reply.is_a?(RuntimeError)
+          reply
         rescue Errno::EAGAIN
 
           # We want to make sure it reconnects on the next command after the
