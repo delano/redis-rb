@@ -673,3 +673,8 @@ require 'redis/client'
 require 'redis/pipeline'
 require 'redis/subscribe'
 require 'redis/compat'
+
+if defined?(RedisExt)
+  require 'redis/ext'
+  Redis::Client.class_eval { include Redis::Ext }
+end
