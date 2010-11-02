@@ -61,7 +61,7 @@ class Redis
     def process(*commands)
       logging(commands) do
         ensure_connected do
-          @sock.write(join_commands(commands))
+          write(commands)
           yield if block_given?
         end
       end
@@ -105,6 +105,10 @@ class Redis
       raise Errno::ECONNRESET, "Connection lost" unless reply_type
 
       format_reply(reply_type, @sock.gets)
+    end
+
+    def write(commands)
+      @sock.write(join_commands(commands))
     end
 
     def without_socket_timeout
